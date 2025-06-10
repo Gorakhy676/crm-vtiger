@@ -31,7 +31,7 @@ public class CreateContactWithOrgTest extends BaseClass {
         CreateNewOrganizationPage createOrg = new CreateNewOrganizationPage(driver);
         createOrg.createOrg(orgName);
         createOrg.getSavebtn().click();
-
+        
         // Step 4: Validate organization creation
         String orgHeader = driver.findElement(By.xpath("//span[@class='dvHeaderText']")).getText();
         if (orgHeader.contains(orgName)) {
