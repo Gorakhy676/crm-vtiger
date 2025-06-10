@@ -69,7 +69,7 @@
 
 	<profiles>
 		<profile>
-			<id>RRG</id>
+			<id>RRT</id>
 			<build>
 				<plugins>
 					<plugin>
@@ -88,7 +88,7 @@
 		</profile>
 		
 		<profile>
-			<id>SR</id>
+			<id>SRT</id>
 			<build>
 				<plugins>
 					<plugin>
@@ -107,7 +107,7 @@
 		</profile>
 		
 		<profile>
-			<id>FR</id>
+			<id>FRT</id>
 			<build>
 				<plugins>
 					<plugin>
