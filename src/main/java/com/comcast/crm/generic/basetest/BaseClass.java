@@ -63,34 +63,52 @@ public class BaseClass {
 //		driver.get(URL);
 //	}
 	
-	@BeforeClass(groups={"smokeTest","regressionTest"})
+	@BeforeClass(groups = {"smokeTest", "regressionTest"})
 	public void configBC() throws Throwable {
-		System.out.println("===Launch the Browser===");
-		String BROWSER = System.getProperty("url") == null ? flib.getDataFromPropertiesFile("bro") : System.getProperty("url");
-		if (BROWSER.equals("chrome")) {
-			driver = new ChromeDriver();
-		} else if (BROWSER.equals("firefox")) {
-			driver = new FirefoxDriver();
-		} else if (BROWSER.equals("edge")) {
-			driver = new EdgeDriver();
-		} else {
-			driver = new ChromeDriver();
-		}
-		sdriver=driver;
-		UtilityClassObject.setDriver(driver);
-		String URL = flib.getDataFromPropertiesFile("url");
-		driver.get(URL);
+	    System.out.println("=== Launch the Browser ===");
+
+	    String BROWSER = System.getProperty("browser") == null
+	            ? flib.getDataFromPropertiesFile("bro")
+	            : System.getProperty("browser");
+
+	    String URL = System.getProperty("url") == null
+	            ? flib.getDataFromPropertiesFile("url")
+	            : System.getProperty("url");
+
+	    if (BROWSER.equalsIgnoreCase("chrome")) {
+	        driver = new ChromeDriver();
+	    } else if (BROWSER.equalsIgnoreCase("firefox")) {
+	        driver = new FirefoxDriver();
+	    } else if (BROWSER.equalsIgnoreCase("edge")) {
+	        driver = new EdgeDriver();
+	    } else {
+	        System.out.println("Invalid browser specified. Launching Chrome by default.");
+	        driver = new ChromeDriver();
+	    }
+
+	    sdriver = driver;
+	    UtilityClassObject.setDriver(driver);
+	    driver.manage().window().maximize();
+	    driver.get(URL);
 	}
 
-	@BeforeMethod(groups={"smokeTest","regressionTest"})
+
+	@BeforeMethod(groups = {"smokeTest", "regressionTest"})
 	public void configBM() throws Throwable {
-		System.out.println(" Login ");
+	    System.out.println("Login");
 
-		String USERNAME = flib.getDataFromPropertiesFile("un");
-		String PASSWORD = flib.getDataFromPropertiesFile("pwd");
-		LoginPage lp = new LoginPage(driver);
-		lp.loginToApp(USERNAME, PASSWORD);
+	    String USERNAME = System.getProperty("username") == null
+	            ? flib.getDataFromPropertiesFile("un")
+	            : System.getProperty("username");
+
+	    String PASSWORD = System.getProperty("password") == null
+	            ? flib.getDataFromPropertiesFile("pwd")
+	            : System.getProperty("password");
+
+	    LoginPage lp = new LoginPage(driver);
+	    lp.loginToApp(USERNAME, PASSWORD);
 	}
+
 	
 
 	@AfterMethod(groups={"smokeTest","regressionTest"})
