@@ -12,33 +12,44 @@ import org.testng.Reporter;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.Status;
 import com.comcast.crm.generic.basetest.BaseClass;
+import com.comcast.crm.listnerutility.ListnerImplementationClass;
 import com.comcast.crm.objectrepositoryutility.CreateNewOrganizationPage;
 import com.comcast.crm.objectrepositoryutility.HomePage;
 import com.comcast.crm.objectrepositoryutility.OrganizationInfoPage;
 import com.comcast.crm.objectrepositoryutility.OrganizationsPage;
+import com.comcast.crm.webdriverutility.UtilityClassObject;
 @Listeners(com.comcast.crm.listnerutility.ListnerImplementationClass.class)
 public class CreateOrganizationTest extends BaseClass {
-
     @Test(groups = "smokeTest")
     public void createOrganizationTest() throws Throwable {
+    	
+    	UtilityClassObject.getTest().log(Status.INFO, "Read the data from Excel");
+    	
+    	//step:1 read testscript data from Excel
         String orgName = elib.getDataFromExcel("org", 4, 2) + jlib.getRandomNumber();
         Reporter.log("Creating Organization: " + orgName, true);
 
+        //step:2 navigate to organization module
+        UtilityClassObject.getTest().log(Status.INFO, "navigate to org page");
         HomePage hp = new HomePage(driver);
         hp.getOrgLink().click();
-
+        //step:3 click on create organization module
+        UtilityClassObject.getTest().log(Status.INFO, "navigate to create org page");
         OrganizationsPage op = new OrganizationsPage(driver);
         op.getCreateNewOrgBtn().click();
 
+        //step:4 enter the all details & create new organization 
+        UtilityClassObject.getTest().log(Status.INFO, "create a new org");
         CreateNewOrganizationPage cnop = new CreateNewOrganizationPage(driver);
         cnop.createOrg(orgName);
         cnop.getSavebtn().click();
 
         OrganizationInfoPage oip = new OrganizationInfoPage(driver);
         String actOrgName = oip.getHeaderVerify().getText();
-
-        Assert.assertTrue(actOrgName.contains(orgName), "Organization name verification failed");
+        Assert.assertEquals(true, actOrgName.contains(orgName));
+      //  Assert.assertTrue(actOrgName.contains(orgName), "Organization name verification failed");
         Reporter.log("Verified organization: " + actOrgName, true);
     }
 

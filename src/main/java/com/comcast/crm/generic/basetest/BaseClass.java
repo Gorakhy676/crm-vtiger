@@ -40,7 +40,7 @@ public class BaseClass {
 	public void configBS() throws Throwable {
 		System.out.println("connect to DB,Report Config==");
 		dblib.getDbconnection();
-		
+	
 	}
 
 //	@Parameters("BROWSER")
@@ -65,11 +65,14 @@ public class BaseClass {
 	
 	@BeforeClass(groups = {"smokeTest", "regressionTest"})
 	public void configBC() throws Throwable {
+	//	System.out.println(System.getProperty("browser"));
 	    System.out.println("=== Launch the Browser ===");
 
-	    String BROWSER = System.getProperty("browser") == null
+	    String browserProperty = System.getProperty("browser");
+
+	    String BROWSER = (browserProperty == null || browserProperty.isEmpty())
 	            ? flib.getDataFromPropertiesFile("bro")
-	            : System.getProperty("browser");
+	            : browserProperty;
 
 	    String URL = System.getProperty("url") == null
 	            ? flib.getDataFromPropertiesFile("url")

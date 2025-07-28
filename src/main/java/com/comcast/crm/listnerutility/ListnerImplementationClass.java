@@ -1,5 +1,8 @@
 package com.comcast.crm.listnerutility;
-
+/**
+ * @author  Gorakh Yadav
+ * 
+ */
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -30,9 +33,10 @@ public class ListnerImplementationClass implements ITestListener,ISuiteListener{
 		public void onStart(ISuite suite)
 		{
 		System.out.println(" Report Configuration");	
-		
+		String time=new Date().toString().replace(" ","_").replace(":", "_");
+
 		//spark report config
-		ExtentSparkReporter spark = new ExtentSparkReporter("./AdvanceReport/report.html");
+		ExtentSparkReporter spark = new ExtentSparkReporter("./AdvanceReport/report"+time+".html");
 				spark.config().setDocumentTitle("CRM TEST SUITE RESULT");
 				spark.config().setReportName("CRM Report");
 				spark.config().setTheme(Theme.DARK);
@@ -45,7 +49,6 @@ public class ListnerImplementationClass implements ITestListener,ISuiteListener{
 				report.setSystemInfo("Author", "Gorakh Yadav");
 		}
 		
-	 	@Override
 		public void onFinish(ISuite suite)
 		{
 			System.out.println(" Report Backup");
@@ -74,7 +77,6 @@ public class ListnerImplementationClass implements ITestListener,ISuiteListener{
         {
         	String testName=result.getMethod().getMethodName();
         	
-
     		//step 1: create an object to eventfirirng webdriver
             TakesScreenshot eDriver = (TakesScreenshot) BaseClass.sdriver;
     		
@@ -91,6 +93,7 @@ public class ListnerImplementationClass implements ITestListener,ISuiteListener{
         public void onTestSkip(ITestResult result)
         {
         	System.out.println("====="+result.getMethod().getMethodName()+"==========");
+        	test.log(Status.SKIP, result.getMethod().getMethodName()+"==>SKIP<==");
 			
       	}
         

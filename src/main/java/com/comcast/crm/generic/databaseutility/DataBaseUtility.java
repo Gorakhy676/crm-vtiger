@@ -20,7 +20,7 @@ public class DataBaseUtility {
 		 conn=DriverManager.getConnection(url,username,password);
 		}
 		catch(Exception e) {
-			
+		
 		}
 	}
 		
