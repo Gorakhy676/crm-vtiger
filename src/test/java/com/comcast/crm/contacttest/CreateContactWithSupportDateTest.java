@@ -44,7 +44,7 @@ public class CreateContactWithSupportDateTest {
 		
 		
 		//read testScript data from excel file
-		FileInputStream fis1 = new FileInputStream("./testdata/contact.xls");
+		FileInputStream fis1 = new FileInputStream("./testdata/contact.xlsx");
 		Workbook wb=  WorkbookFactory.create(fis1);
 		Sheet sheet=wb.getSheet("contact");
 		Row row= sheet.getRow(4);
